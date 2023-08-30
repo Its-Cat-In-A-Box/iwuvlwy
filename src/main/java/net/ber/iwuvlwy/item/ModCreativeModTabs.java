@@ -4,7 +4,6 @@ import net.ber.iwuvlwy.IWuvLwy;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,11 +18,13 @@ public class ModCreativeModTabs {
                     .title(Component.translatable("creativetab.lwy_tab"))
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.HEART.get());
-                        pOutput.accept(ModItems.SHARKCAT_SPAWNEGG.get());
                         pOutput.accept(ModItems.BUILDERS_WAND.get());
+                        pOutput.accept(ModItems.SHARKCAT_SPAWNEGG.get());
+                        pOutput.accept(ModItems.CAPYBARA_SPAWNEGG.get());
                     })
                     .build());
-    public static void register(IEventBus eventBus){
+
+    public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }
 }

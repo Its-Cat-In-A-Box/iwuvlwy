@@ -4,9 +4,9 @@
     "minecraft:plains"
   ],
   "spawners": {
-    "type": "iwuvlwy:sharkcat",
+    "type": "iwuvlwy:capybara",
     "weight": 1000,
     "minCount": 5,
-    "maxCount": 20
+    "maxCount": 10
   }
 }

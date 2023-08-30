@@ -2,6 +2,7 @@ package net.ber.iwuvlwy.event;
 
 import net.ber.iwuvlwy.IWuvLwy;
 import net.ber.iwuvlwy.entity.ModEntities;
+import net.ber.iwuvlwy.entity.custom.CapybaraEntity;
 import net.ber.iwuvlwy.entity.custom.SharkCatEntity;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
@@ -14,13 +15,19 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = IWuvLwy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEvents {
     @SubscribeEvent
-    public static void entityAttributeEvent(EntityAttributeCreationEvent event){
+    public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
         event.put(ModEntities.SHARKCAT.get(), SharkCatEntity.setAttributes());
+        event.put(ModEntities.CAPYBARA.get(), CapybaraEntity.setAttributes());
     }
+
     @SubscribeEvent
-    public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event){
+    public static void entitySpawnRestriction(SpawnPlacementRegisterEvent event) {
         event.register(ModEntities.SHARKCAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(ModEntities.CAPYBARA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Animal::checkAnimalSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
     }
+
 
 }

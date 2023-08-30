@@ -2,7 +2,6 @@ package net.ber.iwuvlwy.item.custom;
 
 import net.ber.iwuvlwy.item.client.BuildersWandItemRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -11,26 +10,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.block.DoubleBlockCombiner;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class BuildersWandItem extends Item implements GeoItem {
-    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
     public BuildersWandItem(Properties pProperties) {
         super(pProperties);
     }
@@ -77,12 +72,17 @@ public class BuildersWandItem extends Item implements GeoItem {
 
             for (BlockPos conBlock : connectedBlocks) {
                 BlockPos newBlockPos = new BlockPos(conBlock.getX() + blockFace.getStepX(), conBlock.getY() + blockFace.getStepY(), conBlock.getZ() + blockFace.getStepZ());
-                if (player.getInventory().contains(new ItemStack(state.getBlock()))) {
-                    pContext.getLevel().setBlock(newBlockPos, state, 1);
+                if (player.getInventory().contains(new ItemStack(state.getBlock())) && pContext.getLevel().getBlockState(newBlockPos).isAir()) {
+                    pContext.getLevel().setBlock(newBlockPos, state, 2);
                     player.getInventory().removeItem(player.getInventory().findSlotMatchingItem(new ItemStack(state.getBlock())), 1);
-                } else {
+                } else if (player.getInventory().contains(new ItemStack(state.getBlock())) && !pContext.getLevel().getBlockState(newBlockPos).isAir()) {
+
+                } else if (!player.getInventory().contains(new ItemStack(state.getBlock())) && pContext.getLevel().getBlockState(newBlockPos).isAir()) {
                     player.sendSystemMessage(Component.literal("No blocks in inventory to place!"));
-                    return InteractionResult.FAIL;
+                    break;
+                } else if (!player.getInventory().contains(new ItemStack(state.getBlock())) && !pContext.getLevel().getBlockState(newBlockPos).isAir()) {
+                    player.sendSystemMessage(Component.literal("No blocks in inventory to place!"));
+                    break;
                 }
             }
         }
@@ -100,6 +100,7 @@ public class BuildersWandItem extends Item implements GeoItem {
         return PlayState.CONTINUE;
     }
 
+
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
@@ -109,8 +110,10 @@ public class BuildersWandItem extends Item implements GeoItem {
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             private BuildersWandItemRenderer renderer = null;
+
             // Don't instantiate until ready. This prevents race conditions breaking things
-            @Override public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (this.renderer == null)
                     this.renderer = new BuildersWandItemRenderer();
 
@@ -118,4 +121,6 @@ public class BuildersWandItem extends Item implements GeoItem {
             }
         });
     }
+
+
 }

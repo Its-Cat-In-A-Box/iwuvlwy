@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " EH",
+    " QE",
+    "Q  "
+  ],
+  "key": {
+    "H": {
+      "item": "iwuvlwy:heart"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "Q": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "iwuvlwy:builders_wand"
+  }
+}

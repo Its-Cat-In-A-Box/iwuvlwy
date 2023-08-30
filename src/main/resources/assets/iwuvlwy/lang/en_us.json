@@ -1,7 +1,8 @@
 {
   "item.iwuvlwy.heart": "<3",
-  "item.iwuvlwy.sharkcat_spawnegg": "Shark Cat",
   "item.iwuvlwy.builders_wand": "Builders wand",
-
+  "item.iwuvlwy.sharkcat_spawnegg": "Shark Cat Spawnegg",
+  "item.iwuvlwy.sharkcat": "Shark Cat",
+  "item.iwuvlwy.capybara=": "Capybara",
   "creativetab.lwy_tab": "Lwy BB"
 }
