@@ -20,4 +20,5 @@ public class BuildersWandItemModel extends GeoModel<BuildersWandItem> {
     public ResourceLocation getAnimationResource(BuildersWandItem animatable) {
         return new ResourceLocation(IWuvLwy.MODID, "animations/builders_wand.animation.json");
     }
+
 }

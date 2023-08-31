@@ -19,6 +19,7 @@ public class ModCreativeModTabs {
                     .displayItems((pParameters, pOutput) -> {
                         pOutput.accept(ModItems.HEART.get());
                         pOutput.accept(ModItems.BUILDERS_WAND.get());
+                        pOutput.accept(ModItems.INSTANT_CAMERA.get());
                         pOutput.accept(ModItems.SHARKCAT_SPAWNEGG.get());
                         pOutput.accept(ModItems.CAPYBARA_SPAWNEGG.get());
                     })
